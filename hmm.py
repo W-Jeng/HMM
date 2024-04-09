@@ -19,16 +19,20 @@ class HiddenMarkovChain:
         self.initial_state_probability_distribution = initial_state_probability_distribution
 
     def likelihood_seq(self, observation_seq: list):
-        trellis_matrix = [[] for _ in range(self.n_states)]
-
-        for row in trellis_matrix:
-            row.extend([None] * len(observation_seq))
+        trellis_matrix = [[0] * len(observation_seq) for _ in range(self.n_states)]
         
         # initialize
         for state in range(self.n_states):
             trellis_matrix[state][0] = self.initial_state_probability_distribution[state] * self.emission_probabilities[observation_seq[0]][state]
 
+        # recursion, still wrong!
+        for seq in range(1, len(observation_seq)):
+            for state in range(self.n_states):
+                for i in range(self.n_states):
+                    trellis_matrix[state][seq] += trellis_matrix[i][seq-1]*self.transition_probability_matrix[i][state]*self.emission_probabilities[observation_seq[seq]][state]
+
         print(trellis_matrix)
+
 
 
         
