@@ -12,3 +12,5 @@ if __name__ == "__main__":
 
     hmm = HiddenMarkovChain(n_states, transition_probability_matrix, emission_probabilities, initial_state_probability_distribution)
     hmm.likelihood_seq([2,0,2])
+
+    hmm.viterbi_algorithm([2,0,2])
